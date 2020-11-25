@@ -59,11 +59,13 @@ public class ClientManager {
                 JOptionPane.showMessageDialog(new JFrame(), "User from type " + currentUser.getPosition() + " cannot add " + user.getPosition() + "!", "Alert", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+            
             users.add(user);
         } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(new JFrame(), "Unknown exception! Please try again!", "Alert", JOptionPane.WARNING_MESSAGE);
             throw ex;
         }
+        System.gc();
     }
 
     public User registerUser(User user) {
@@ -79,6 +81,21 @@ public class ClientManager {
                 user.setPassword(pass);
             }
             user.setName(JOptionPane.showInputDialog("Please enter a valid name: "));
+        }
+        if(user.getPosition().equals("admin")) {
+            Administrator admin = new Administrator(user);
+            user = admin;
+        }
+        else if(user.getPosition().equals("representative")) {
+            SalesRepresentative srp = new SalesRepresentative(user);
+            user = srp;
+        }
+        else if(user.getPosition().equals("user")) {
+            Clients client = new Clients(user);
+            user = client;
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "Invalid client data!", "Alert", JOptionPane.WARNING_MESSAGE);
+            user = null;
         }
         return user;
 

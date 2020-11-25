@@ -15,4 +15,8 @@ public class Clients extends User {
         super(name, position, user_name, password, email);
     }
     
+    public Clients(User user) {
+        super(user.getName(), user.getPosition(), user.getUser_name(),user.getPassword(), user.getEmail());
+    }
+    
 }
