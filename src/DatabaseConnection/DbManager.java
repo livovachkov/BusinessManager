@@ -32,9 +32,9 @@ public class DbManager {
    public static void main(String[] args) throws Exception {
         DbManager db = new DbManager();
         
-        Product prod = db.getProduct(3);
+        db.addUser(new User("Kiril Ivanov Mihailov", "admin", "admin@admin.bg", "k_mihailov", "da22434F512!sfa24"));
         
-        System.out.println("Product retrieved with id " + 3 + " " + prod.getProduct_name());
+        System.out.println("");
         
     }
 
@@ -52,7 +52,7 @@ public class DbManager {
         }
     }
     
-    
+
     
     
     public boolean addUser(User user) throws SQLException, Exception {
@@ -68,8 +68,8 @@ public class DbManager {
             ps.setString(3, PassSecurity.getSHA1(user.getPassword()));
             ps.setString(4, user.getPosition());
             ps.setString(5, user.getName());
-            ps.setInt(6, user.getSales());
-            ResultSet rset = ps.executeQuery();
+            ps.setInt(6, user._getSales());
+            ps.execute();
             /* if(rset.next()) {
                 throw new SQLException("Impossible");
             }*/

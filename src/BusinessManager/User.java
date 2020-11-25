@@ -58,6 +58,7 @@ public class User {
         this.email = email;
         this.user_name = user_name;
         this.password = password;
+        this.sales = 0;
     }
 
     public String getEmail() {
@@ -94,12 +95,12 @@ public class User {
     }
     
     public boolean isValidPassword() {
-        if (password.length() > 15 || password.length() < 8) {
+        if (password.length() > 20 || password.length() < 8) {
             JOptionPane.showMessageDialog(new JFrame(),"Password must be less than 20 and more than 8 characters in length!", "Alert",JOptionPane.WARNING_MESSAGE);
             return false;
         }
                
-        Pattern p = Pattern.compile("^(?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$");
+        Pattern p = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
         if(password == null)
             return false;
         Matcher m = p.matcher(password);
@@ -109,7 +110,7 @@ public class User {
     public boolean isValidName() {
         if(name == null)
             return false;
-        Pattern p = Pattern.compile("^[\\\\p{L} .'-]+$");
+        Pattern p = Pattern.compile("^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$");
         Matcher m = p.matcher(name);
         return m.matches();
     }
@@ -124,14 +125,15 @@ public class User {
     
 
     public boolean validateUser() {
+        System.out.println("" + validatePosition() + isValidUsername() + isValidPassword() + isValidName() + isValidEmail());
         return (validatePosition() && isValidUsername() && isValidPassword() && isValidName() && isValidEmail());
     }
 
-    public void setSales(int sales) {
+    public void _setSales(int sales) {
         this.sales = sales;
     }
     
-    public int getSales() {
+    public int _getSales() {
         return sales;
     }
     
