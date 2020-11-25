@@ -16,7 +16,7 @@ import java.util.Date;
 public class Sales {
 
     public Sales(double sales) {
-        this.sales = sales;
+        this.price = sales;
     }
 
     public Date getDateOfSale() {
@@ -32,7 +32,7 @@ public class Sales {
     }
     
     private Date dateOfSale;
-    private double sales;
+    private double price;
     private Product product;
 
     public Product getProduct() {
@@ -44,12 +44,12 @@ public class Sales {
     }
 
     
-    public double getSales() {
-        return sales;
+    public double getPrice() {
+        return price;
     }
 
-    public void setSales(double sales) {
-        this.sales = sales;
+    public void setPrice(double price) {
+        this.price = price;
     }
     
     public boolean isValidDate() {
@@ -62,7 +62,7 @@ public class Sales {
     }
     
     public boolean checkIntegrity() {
-        return (isValidDate() && product.isValidProduct() && sales >= 0);
+        return (isValidDate() && product.isValidProduct() && price >= 0);
     }
     
 }

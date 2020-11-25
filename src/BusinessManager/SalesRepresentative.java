@@ -23,7 +23,7 @@ public class SalesRepresentative extends User {
     public double getSales() {
         double totalSales = 0;
         for(Sales s: sales) {
-            totalSales += s.getSales();
+            totalSales += s.getPrice();
         }
         return totalSales;
     }

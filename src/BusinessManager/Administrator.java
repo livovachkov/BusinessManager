@@ -15,7 +15,7 @@ public class Administrator extends User {
         super(name, position, user_name, password, email);
     }
 
-    Administrator(User user) {
+    public Administrator(User user) {
         super(user.getName(), user.getPosition(), user.getUser_name(),user.getPassword(), user.getEmail());
     }
     

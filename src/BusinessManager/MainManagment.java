@@ -37,17 +37,7 @@ public class MainManagment {
     private String connectionUrl;
     private User current_user;
     private ClientManager clients = new ClientManager(current_user); // should get it from login!
-    private ArrayList<Product> product = new ArrayList<Product>();
-
-
-    public ArrayList<Product> getProduct() {
-        return product;
-    }
-
-    public void setProduct(ArrayList<Product> product) {
-        this.product = product;
-    }
-
+    private ProductManager products = new ProductManager(current_user);
 
     public void connectToDatabase() {
         try (Connection connection = DriverManager.getConnection(connectionUrl);) {
