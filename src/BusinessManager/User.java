@@ -69,6 +69,17 @@ public class User {
     }
     private String user_name, password;
     private String name, position, email;
+    private int id;
+    
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     
     public boolean validatePosition() {
         return(position.equals("user") ||  position.equals("admin") || position.equals("representative"));

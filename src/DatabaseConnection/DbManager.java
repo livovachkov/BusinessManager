@@ -7,6 +7,7 @@ package DatabaseConnection;
 
 import BusinessManager.Product;
 import BusinessManager.Sales;
+import BusinessManager.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -50,18 +51,64 @@ public class DbManager {
             throw ex;
         }
     }
+    
+    public User getUser(int id) throws SQLException, Exception {
+        User user = null;
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://" + serverName + "/" + schema, "root", "root");) {
+            String query = "select * from users.users where id = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, String.valueOf(id));
+            ResultSet rset = ps.executeQuery();
 
-    public Sales getSale(int id) throws SQLException {
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://" + serverName + "/" + schema, "root", "root"); Statement stmt = con.createStatement();) {
-            String select = "select sales from users where id = " + String.valueOf(id);
-            ResultSet rset = stmt.executeQuery(select);
-            while (rset.next()) {
-                int _id = rset.getInt("id");
+            if (rset.next()) {
+                String name = rset.getString("name"); //String name, String position, String email, String user_name, String password
+                String position = rset.getString("position");
+                String email = rset.getString("email");
+                String user_name = rset.getString("user_name");
+                String password = rset.getString("password"); 
+                user = new User(name, position, email, user_name, password);
+                user.setId(rset.getInt("id"));
             }
+           /* if(rset.next()) {
+                throw new SQLException("Impossible");
+            }*/
         } catch (SQLException ex) {
             throw ex;
         }
-        return null;
+        if(user == null) {
+            JOptionPane.showMessageDialog(new JFrame(), "Invalid product id:" + id + "!", "Alert", JOptionPane.ERROR_MESSAGE);
+            throw new Exception("Error, invalid product id! Cannot be fetched therefore returning null product!");
+        }
+        return user;
+    }
+    
+
+    public Sales getSale(int id) throws SQLException, Exception {
+        Sales sale = null;
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://" + serverName + "/" + schema, "root", "root");) {
+            String query = "select * from users.sales where id = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, String.valueOf(id));
+            ResultSet rset = ps.executeQuery();
+
+            if (rset.next()) {
+                int _id = rset.getInt("id");
+                Date date = rset.getDate("date");
+                double price = rset.getDouble("price");
+                Product product = getProduct(rset.getString("product"));
+                sale = new Sales(_id, date, price, product);
+            }
+           /* if(rset.next()) {
+                throw new SQLException("Impossible");
+            }*/
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        if(sale == null) {
+            JOptionPane.showMessageDialog(new JFrame(), "Invalid product id:" + id + "!", "Alert", JOptionPane.ERROR_MESSAGE);
+            throw new Exception("Error, invalid product id! Cannot be fetched therefore returning null product!");
+        }
+        return sale;
     }
 
     public Product getProduct(int id) throws SQLException, Exception {
@@ -91,6 +138,37 @@ public class DbManager {
         }
         return prod;
     }
+    
+   
+    public Product getProduct(String id) throws SQLException, Exception {
+       Product prod = null;
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://" + serverName + "/" + schema, "root", "root");) {
+            String query = "select * from users.products where name = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, String.valueOf(id));
+            ResultSet rset = ps.executeQuery();
+
+            if (rset.next()) {
+                int _id = rset.getInt("id");
+                double price = rset.getDouble("price");
+                String manufacturer = rset.getString("manufacturer");
+                String name = rset.getString("name");
+                prod = new Product(String.valueOf(_id), name, manufacturer, price);
+            }
+           /* if(rset.next()) {
+                throw new SQLException("Impossible");
+            }*/
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        if(prod == null) {
+            JOptionPane.showMessageDialog(new JFrame(), "Invalid product id:" + id + "!", "Alert", JOptionPane.ERROR_MESSAGE);
+            throw new Exception("Error, invalid product id! Cannot be fetched therefore returning null product!");
+        }
+        return prod;
+    }
+    
+    
 
     private String generateActualSql(String sqlQuery, Object... parameters) {
         String[] parts = sqlQuery.split("\\?");

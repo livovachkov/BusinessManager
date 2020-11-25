@@ -31,7 +31,7 @@ public class Sales {
         this.dateOfSale = new Date(year, month, date, hrs, min, sec);
     }
 
-    public Sales(Date dateOfSale, double price, Product product) {
+    public Sales(int id, Date dateOfSale, double price, Product product) {
         this.dateOfSale = dateOfSale;
         this.price = price;
         this.product = product;
@@ -40,6 +40,17 @@ public class Sales {
     private Date dateOfSale;
     private double price;
     private Product product;
+    private int id;
+    
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     //private User representative;
 
     public Product getProduct() {
@@ -69,7 +80,7 @@ public class Sales {
     }
     
     public boolean checkIntegrity() {
-        return (isValidDate() && product.isValidProduct() && price >= 0/* && representative.getPosition().equals("representative")*/);
+        return (isValidDate() && product.isValidProduct() && price >= 0 && id >= 0/* && representative.getPosition().equals("representative")*/);
     }
     
 }
