@@ -52,6 +52,55 @@ public class DbManager {
         }
     }
     
+    
+    
+    
+    public boolean addUser(User user) throws SQLException, Exception {
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://" + serverName + "/" + schema, "root", "root");) {
+            String query = "insert into users.users (ID, username, password, type, name, sales) values(?,?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            if(!user.validateUser()) {
+                JOptionPane.showMessageDialog(new JFrame(), "Invalid try for insertion into the registry! Invalid user!", "Error!", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            ps.setInt(1, user.getId());
+            ps.setString(2, user.getUser_name());
+            ps.setString(3, PassSecurity.getSHA1(user.getPassword()));
+            ps.setString(4, user.getPosition());
+            ps.setString(5, user.getName());
+            ps.setInt(6, user.getSales());
+            ResultSet rset = ps.executeQuery();
+            /* if(rset.next()) {
+                throw new SQLException("Impossible");
+            }*/
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        if (user == null) {
+            JOptionPane.showMessageDialog(new JFrame(), "Invalid try for insertion! User is with empty characteristics!", "Alert", JOptionPane.ERROR_MESSAGE);
+            throw new Exception("Error, invalid product id! Cannot be fetched therefore returning null product!");
+        }
+        return true;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /////GET DATA
+    
     public User getUser(int id) throws SQLException, Exception {
         User user = null;
         try (Connection con = DriverManager.getConnection("jdbc:mysql://" + serverName + "/" + schema, "root", "root");) {

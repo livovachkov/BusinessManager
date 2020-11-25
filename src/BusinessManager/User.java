@@ -69,7 +69,7 @@ public class User {
     }
     private String user_name, password;
     private String name, position, email;
-    private int id;
+    private int id, sales;
     
     
     public int getId() {
@@ -125,6 +125,14 @@ public class User {
 
     public boolean validateUser() {
         return (validatePosition() && isValidUsername() && isValidPassword() && isValidName() && isValidEmail());
+    }
+
+    public void setSales(int sales) {
+        this.sales = sales;
+    }
+    
+    public int getSales() {
+        return sales;
     }
     
 }
