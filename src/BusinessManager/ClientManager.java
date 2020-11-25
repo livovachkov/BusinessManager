@@ -36,8 +36,8 @@ public class ClientManager {
         return users;
     }
 
-    public void setUsers(ArrayList<User> users) {
-        if (currentUser.getPosition().equals("admin")) {
+    public void setUsers(ArrayList<User> users, boolean flag) {
+        if (currentUser.getPosition().equals("admin") || flag == true) {
             this.users = users;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "User from type " + currentUser.getPosition() + " cannot add users!", "Alert", JOptionPane.WARNING_MESSAGE);
