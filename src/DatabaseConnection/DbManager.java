@@ -169,40 +169,4 @@ public class DbManager {
     }
     
     
-
-    private String generateActualSql(String sqlQuery, Object... parameters) {
-        String[] parts = sqlQuery.split("\\?");
-        StringBuilder sb = new StringBuilder();
-
-        // This might be wrong if some '?' are used as litteral '?'
-        for (int i = 0; i < parts.length; i++) {
-            String part = parts[i];
-            sb.append(part);
-            if (i < parameters.length) {
-                sb.append(formatParameter(parameters[i]));
-            }
-        }
-
-        return sb.toString();
-    }
-
-    private String formatParameter(Object parameter) {
-        if (parameter == null) {
-            return "NULL";
-        } else {
-            if (parameter instanceof String) {
-                return "'" + ((String) parameter).replace("'", "''") + "'";
-            } else if (parameter instanceof Timestamp) {
-                return "to_timestamp('" + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS").
-                        format(parameter) + "', 'mm/dd/yyyy hh24:mi:ss.ff3')";
-            } else if (parameter instanceof Date) {
-                return "to_date('" + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").
-                        format(parameter) + "', 'mm/dd/yyyy hh24:mi:ss')";
-            } else if (parameter instanceof Boolean) {
-                return ((Boolean) parameter).booleanValue() ? "1" : "0";
-            } else {
-                return parameter.toString();
-            }
-        }
-    }
 }
