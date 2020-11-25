@@ -42,6 +42,13 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public Product(String id, String product_name, String manufacturer, double price) {
+        this.id = id;
+        this.product_name = product_name;
+        this.manufacturer = manufacturer;
+        this.price = price;
+    }
     private String id, product_name, manufacturer;
     private double price;
     
