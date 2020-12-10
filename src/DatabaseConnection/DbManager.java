@@ -23,16 +23,23 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Liliyan
+ * 
+ * idea only reads/adds to the db, MainManagment takes care of the permissions!
+ * encryption is shared through PassSecurity class
+ * 
  */
 public class DbManager {
 
     String serverName = "localhost:3306";
     String schema = "users?zeroDateTimeBehavior=CONVERT_TO_NULL";
+
     
    public static void main(String[] args) throws Exception {
         DbManager db = new DbManager();
         
-        db.addUser(new User("Kiril Ivanov Mihailov", "admin", "admin@admin.bg", "k_mihailov", "da22434F512!sfa24"));
+        //String yourCommand = "mysqldump -h " + db.serverName + "/" + db.schema + " -u root -p root -c --add-drop-table --add-locks --all --quick --lock-tables users > sqldump.sql";
+        //Runtime.getRuntime().exec(new String[] { "cmd.exe", "/c", yourCommand });
+        //db.addUser(new User("Kiril Ivanov Mihailov", "admin", "admin@admin.bg", "k_mihailov", "da22434F512!sfa24"));
         
         System.out.println("");
         
@@ -83,7 +90,7 @@ public class DbManager {
         return true;
     }
     
-    
+
     
     
     
